@@ -1,0 +1,24 @@
+#python
+*.pyc
+*.swp
+.tox
+__pycache__
+dist
+*.egg-info
+
+#django
+*.log
+*.pot
+*.db
+*.sqlite3
+
+#pycharm
+.idea
+.cache
+
+#MAC folder info
+.DS_Store
+
+# virtual environment
+venv
+.env
