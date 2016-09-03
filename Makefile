@@ -1,4 +1,4 @@
-packages=ldapy
+PACKAGENAME=ldapy
 
 .PHONY: help
 help:
@@ -43,6 +43,8 @@ publish:
 
 .PHONY: clean
 clean:
-	find . -name "*pyc" | xargs rm
-	rm -rf build $(PACKAGENAME).egg-info
+	find . -name "*pyc" | xargs -r rm
+	rm -fr build $(PACKAGENAME).egg-info
+	rm -fr __pycache__
+	rm -fr .cache
 	@echo "$@ done."
