@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pprint
 import re
-from dotexdict import dotexdict
+from .dotexdict import dotexdict
 
 
 class LdapObject(dotexdict):

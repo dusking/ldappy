@@ -1,9 +1,29 @@
 import logging
 import ldap
-from safeldap import safe_ldap
+from .safeldap import safe_ldap
 
 logger = logging.getLogger(__name__)
 LDAP_SUCCESS_CODE = 97
+
+
+def byte_to_str(obj):
+    if type(obj) is not list:
+        return
+    for index, _ in enumerate(obj):
+        if type(obj[index]) is tuple:
+            obj[index] = list(obj[index])
+        if type(obj[index]) is list:
+            byte_to_str(obj[index])
+            return
+        if type(obj[index]) is dict:
+            for key, value in obj[index].items():
+                byte_to_str(obj[index][key])
+            return
+        if type(obj[index]) is bytes:
+            try:
+                obj[index] = obj[index].decode("utf-8")
+            except:
+                obj[index] = str(obj[index])
 
 
 class LdapScope(object):
@@ -89,7 +109,8 @@ class LdapQuery(object):
             else:
                 if result_type == ldap.RES_SEARCH_ENTRY:
                     result_set.append(result_data)
-        print (result_set)
+        byte_to_str(result_set)
+        return result_set
 
     @safe_ldap(default=None, message='Failed to query ldap server')
     def search_sync(self,
@@ -115,12 +136,14 @@ class LdapQuery(object):
                      .format(self._ldap_config.ldap_server,
                              base_dn,
                              search_filter))
-        return self._ldap_conn.search_st(base=base_dn,
-                                         scope=search_scope,
-                                         filterstr=search_filter,
-                                         attrlist=attribute_list,
-                                         attrsonly=attrs_only,
-                                         timeout=timeout_sec)
+        result = self._ldap_conn.search_st(base=base_dn,
+                                           scope=search_scope,
+                                           filterstr=search_filter,
+                                           attrlist=attribute_list,
+                                           attrsonly=attrs_only,
+                                           timeout=timeout_sec)
+        byte_to_str(result)
+        return result
 
     @staticmethod
     def _remove_empty_items(list_input):

@@ -1,5 +1,8 @@
-from ldapobject import LdapObject
-import user
+from .ldapobject import LdapObject
+try:  # Python 2.7
+    import user
+except:
+    from . import user
 
 
 class Group(LdapObject):
@@ -7,7 +10,7 @@ class Group(LdapObject):
     def __init__(self, *args, **kwargs):
         super(Group, self).__init__(*args, **kwargs)
         self._create_attribute_aliases()
-        self._print_attributes = self._attributes_aliases.keys()
+        self._print_attributes = list(self._attributes_aliases.keys())
         self._print_attributes.extend(['mail', 'member'])
 
     def members(self):

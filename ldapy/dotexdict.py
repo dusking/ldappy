@@ -36,7 +36,7 @@ class DotExDict(dict):
     __delattr__ = dict.__delitem__
 
     def set_attribute_aliases(self, aliases):
-        for alias, attribute in aliases.iteritems():
+        for alias, attribute in aliases.items():
             if attribute in self:
                 self._attributes_aliases[alias] = attribute
 

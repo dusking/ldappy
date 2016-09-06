@@ -1,8 +1,8 @@
 # Set default logging handler to avoid "No handler found" warnings.
 import logging
-from ldapy import Ldapy  # NOQA
-from user import User  # NOQA
-from group import Group  # NOQA
+from .ldapy import Ldapy  # NOQA
+from .user import User  # NOQA
+from .group import Group  # NOQA
 
 try:  # Python 2.7+
     from logging import NullHandler

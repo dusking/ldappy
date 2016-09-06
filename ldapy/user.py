@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from ldapobject import LdapObject
-import group
+from .ldapobject import LdapObject
+from . import group
 
 
 class User(LdapObject):
@@ -8,7 +8,7 @@ class User(LdapObject):
     def __init__(self, *args, **kwargs):
         super(User, self).__init__(*args, **kwargs)
         self._create_attribute_aliases()
-        self._print_attributes = self._attributes_aliases.keys()
+        self._print_attributes = list(self._attributes_aliases.keys())
         self._print_attributes.extend(['mail',
                                        'department',
                                        'description',

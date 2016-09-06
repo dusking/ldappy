@@ -1,8 +1,8 @@
 import logging
-from ldapconfig import LdapConfig
-from users import Users
-from groups import Groups
-from ldapconnection import handle_ldap_connection
+from .ldapconfig import LdapConfig
+from .users import Users
+from .groups import Groups
+from .ldapconnection import handle_ldap_connection
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,9 @@ class Ldapy(object):
         self._group_objects = Groups(self._ldap_config)
 
     @handle_ldap_connection
-    def authenticate(self):
+    def authenticate(self, username=None, password=None):
+        if username and password:
+            pass
         return bool(self._ldap_conn)
 
     @property

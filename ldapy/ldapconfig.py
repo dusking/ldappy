@@ -1,7 +1,7 @@
 import re
 import ldap
 import logging
-from dotexdict import dotexdict
+from .dotexdict import dotexdict
 
 logger = logging.getLogger(__name__)
 

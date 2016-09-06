@@ -49,4 +49,3 @@ def get_group():
 if __name__ == "__main__":
     set_logger()
     get_group()
-
