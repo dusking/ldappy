@@ -1,8 +1,4 @@
 from .ldapobject import LdapObject
-try:  # Python 2.7
-    import user
-except:
-    from . import user
 
 
 class Group(LdapObject):
@@ -14,6 +10,9 @@ class Group(LdapObject):
         self._print_attributes.extend(['mail', 'member'])
 
     def members(self):
+        # solve circular imports also in Python3.4
+        from . import user
+
         if 'member' not in self:
             return []
         result = []
