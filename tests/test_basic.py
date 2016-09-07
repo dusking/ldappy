@@ -25,6 +25,12 @@ def test_get_user(config, user):
     assert type(user) is User
 
 
+def test_get_user_data(config, user):
+    ldapy = Ldapy(config)
+    user = ldapy.user_objects.get(name=user)
+    assert len(user.pretty_data()) > 0
+
+
 def test_get_none_exists_user(config):
     ldapy = Ldapy(config)
     user = ldapy.user_objects.get(name='not_exist')

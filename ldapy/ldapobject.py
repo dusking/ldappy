@@ -16,10 +16,10 @@ class LdapObject(dotexdict):
         result = {}
         for key in self._print_attributes:
             try:
-                key = key.encode('utf-8')
+                assert isinstance(key, str)
                 if type(self[key]) is not list:
                     self[key] = [self[key]]
-                value = [value.encode('utf-8') for value in self[key]]
+                value = [str(value) for value in self[key]]
                 result[key] = value
             except:
                 pass
@@ -29,6 +29,7 @@ class LdapObject(dotexdict):
         """
         pretty print of the pretty data
         """
+        print (self.pretty_data())
         pp = pprint.PrettyPrinter(indent=2)
         pp.pprint(self.pretty_data())
 
