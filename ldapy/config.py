@@ -6,17 +6,16 @@ from .dotexdict import dotexdict
 logger = logging.getLogger(__name__)
 
 
-class LdapConfig(dotexdict):
+class Config(dotexdict):
 
     def __init__(self, *args, **kwargs):
-        super(LdapConfig, self).__init__(*args, **kwargs)
+        super(Config, self).__init__(*args, **kwargs)
         self.set_attribute_aliases({
             'host_name': 'ldap_server',
             'ad_server': 'ldap_server',
             'active_directory_server': 'ldap_server',
             'windows_login_name': 'sam_account_name'
         })
-        # self._update()
         self._validate()
 
     def _validate(self):
@@ -30,10 +29,6 @@ class LdapConfig(dotexdict):
         if not self[key]:
             raise Exception('missing value for "{0}" in ldap configuration'.format(key))
 
-    def _update(self):
-        self._add_ldap_port_to_server()
-        self._set_domain_component()
-
     def _add_ldap_port_to_server(self):
         """
         Add ldap por if missing.
@@ -45,6 +40,10 @@ class LdapConfig(dotexdict):
             logger.info('adding ldap port to server: {0}'.format(self.ldap_server))
 
     def _set_domain_component(self):
+        """
+        If missing, add domain component to configuration based on the server url
+        :return:
+        """
         if 'domain_component' not in self:
             ldap_server_without_port = re.sub(r':\d+/', '', self.ldap_server)
             components_list = ldap_server_without_port.split('.')

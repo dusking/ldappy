@@ -1,7 +1,7 @@
 import logging
-from .ldapquery import LdapQuery, LdapScope
 from .user import User
-from .ldapconnection import handle_ldap_connection
+from .ldapquery import LdapQuery, LdapScope
+from .connection import handle_ldap_connection
 
 logger = logging.getLogger(__name__)
 

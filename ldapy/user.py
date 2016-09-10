@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from .ldapobject import LdapObject
 from . import group
+from .ldapobject import LdapObject
 
 
 class User(LdapObject):

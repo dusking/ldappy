@@ -12,16 +12,15 @@ def read(*parts):
 
 setup(
     name='ldapy',
-    version="1.0.0",
+    version="0.1.0",
     url='https://github.com/dusking/ldapy',
     author='Omer Duskin',
     author_email='dusking@gmail.com',
     license='LICENSE',
     platforms='All',
-    description='Replace Regular Expressions in files',
+    description='Query LDAP server without LDAP knowledge',
     long_description=read('README.rst'),
     packages=['ldapy'],
-    py_modules=['ldapy'],
     install_requires=[
         "pyldap==2.4.25.1",
     ],

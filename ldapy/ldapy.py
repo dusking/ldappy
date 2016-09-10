@@ -1,8 +1,8 @@
 import logging
-from .ldapconfig import LdapConfig
 from .users import Users
 from .groups import Groups
-from .ldapconnection import handle_ldap_connection
+from .config import Config
+from .connection import handle_ldap_connection
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ class Ldapy(object):
     """
 
     def __init__(self, config):
-        self._ldap_config = LdapConfig(config)
+        self._ldap_config = Config(config)
         self._ldap_conn = None
         self._user_objects = Users(self._ldap_config)
         self._group_objects = Groups(self._ldap_config)

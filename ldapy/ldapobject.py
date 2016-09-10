@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import pprint
 import re
+import pprint
 from .dotexdict import dotexdict
 
 
