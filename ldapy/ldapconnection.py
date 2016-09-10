@@ -11,24 +11,24 @@ class LdapConnection(object):
         self._config = config
         self._conn = None
 
-    def connection_login_string(self):
+    def connection_login_string(self, user=None):
+        username = user if user else self._config.username
         if self._config.active_directory:
             logger.debug('using active directory login style')
-            logon_user = '{0}@{1}'.format(self._config.username, self._config.domain)
+            logon_user = '{0}@{1}'.format(username, self._config.domain)
             return logon_user
         organization_id = ',o={0}'.format(self._config.organization_id) \
             if self._config.organization_id \
             else ''
-        distinguished_name = 'uid={0},ou=Users{1},{2}'.format(self._config.username,
+        distinguished_name = 'uid={0},ou=Users{1},{2}'.format(username,
                                                               organization_id,
                                                               self._config.domain_component)
         return distinguished_name
 
-    def connect(self):
+    def connect(self, username=None, password=None):
         """
-        :param user: existing username with permissions to bind to and search the LDAP service
+        :param username: existing username with permissions to bind to and search the LDAP service
         :param password: the user password
-        :param ldap_server:
         :return:  LDAPObject instance by opening LDAP connection to LDAP host specified by LDAP URL.
         """
         try:
@@ -36,9 +36,10 @@ class LdapConnection(object):
             self._conn.protocol_version = ldap.VERSION3
             self._conn.set_option(ldap.OPT_PROTOCOL_VERSION, 3)
             self._conn.set_option(ldap.OPT_REFERRALS, 0)
-            distinguished_login_name = self.connection_login_string()
+            distinguished_login_name = self.connection_login_string(username)
+            password = password if password else self._config.password
             logger.debug('going to connect using user: {0}'.format(distinguished_login_name))
-            result = self._conn.simple_bind_s(distinguished_login_name, self._config.password)
+            result = self._conn.simple_bind_s(distinguished_login_name, password)
             if result[0] != LDAP_SUCCESS_CODE:
                 raise ldap.LDAPError('LDAP user bind failed')
             return self._conn

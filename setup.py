@@ -11,8 +11,8 @@ def read(*parts):
 
 
 setup(
-    name='ldapy',
-    version="0.1.0",
+    name='ldappy',
+    version="0.1.1",
     url='https://github.com/dusking/ldapy',
     author='Omer Duskin',
     author_email='dusking@gmail.com',
