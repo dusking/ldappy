@@ -22,15 +22,21 @@ class Ldapy(object):
         self._user_objects = Users(self._ldap_config)
         self._group_objects = Groups(self._ldap_config)
 
-    def authenticate(self, username=None, password=None):
+    def authenticate(self, username=None, password=None, retries=1):
         connection = LdapConnection(self._ldap_config)
-        try:
-            connection.connect(username, password)
-            result = True
-        except:
-            result = False
+        success = False
+        try_to_connect = True
+        while try_to_connect:
+            logger.debug('Authentication attempt for user: {0}'.format(username))
+            try:
+                connection.connect(username, password)
+                success = True
+            except Exception as ex:
+                logger.error('Authentication failed with error: {0}'.format(ex))
+            retries -= 1
+            try_to_connect = not success and retries > 0
         connection.disconnect()
-        return result
+        return success
 
     @property
     def user_objects(self):

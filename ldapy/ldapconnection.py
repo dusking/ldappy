@@ -29,7 +29,7 @@ class LdapConnection(object):
         """
         :param username: existing username with permissions to bind to and search the LDAP service
         :param password: the user password
-        :return:  LDAPObject instance by opening LDAP connection to LDAP host specified by LDAP URL.
+        :return: LDAPObject instance by opening LDAP connection to LDAP host specified by LDAP URL.
         """
         try:
             self._conn = ldap.initialize(self._config.ldap_server)
