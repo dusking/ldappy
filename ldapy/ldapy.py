@@ -1,3 +1,4 @@
+import time
 import logging
 from .users import Users
 from .groups import Groups
@@ -22,11 +23,10 @@ class Ldapy(object):
         self._user_objects = Users(self._ldap_config)
         self._group_objects = Groups(self._ldap_config)
 
-    def authenticate(self, username=None, password=None, retries=1):
+    def authenticate(self, username, password, retries=1):
         connection = LdapConnection(self._ldap_config)
         success = False
-        try_to_connect = True
-        while try_to_connect:
+        while not success and retries > 0:
             logger.debug('Authentication attempt for user: {0}'.format(username))
             try:
                 connection.connect(username, password)
@@ -34,7 +34,9 @@ class Ldapy(object):
             except Exception as ex:
                 logger.error('Authentication failed with error: {0}'.format(ex))
             retries -= 1
-            try_to_connect = not success and retries > 0
+            if not success and retries > 0:
+                time.sleep(1)
+
         connection.disconnect()
         return success
 
