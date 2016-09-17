@@ -12,7 +12,7 @@ def read(*parts):
 
 setup(
     name='ldappy',
-    version="0.1.2",
+    version="0.1.3",
     url='https://github.com/dusking/ldapy',
     author='Omer Duskin',
     author_email='dusking@gmail.com',
