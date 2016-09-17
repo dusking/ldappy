@@ -8,7 +8,7 @@ from .ldapconnection import LdapConnection
 logger = logging.getLogger(__name__)
 
 
-class Ldapy(object):
+class Ldappy(object):
     """
     Wrapper to the ldap lib, one that will make you happy.
 

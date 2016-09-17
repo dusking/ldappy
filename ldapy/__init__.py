@@ -1,6 +1,6 @@
 # Set default logging handler to avoid "No handler found" warnings.
 import logging
-from .ldapy import Ldapy  # NOQA
+from .ldappy import Ldappy  # NOQA
 from .user import User  # NOQA
 from .group import Group  # NOQA
 
