@@ -1,4 +1,4 @@
-from .. ldapy import Ldappy, User, Group
+from .. ldappy import Ldappy, User, Group
 
 
 def test_authenticate(config):

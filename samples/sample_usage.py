@@ -16,7 +16,7 @@
 # along with ldapy.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-from ldapy import Ldapy
+from ldappy import Ldappy
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -41,7 +41,7 @@ def set_logger():
 
 def get_group():
     logger.debug('get group info')
-    ldapy = Ldapy(jumpcloud_config)
+    ldapy = Ldappy(jumpcloud_config)
     group = ldapy.group_objects.get('group2')
     group.pretty_print()
 

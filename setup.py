@@ -20,7 +20,7 @@ setup(
     platforms='All',
     description='Query LDAP server without LDAP knowledge',
     long_description=read('README.rst'),
-    packages=['ldapy'],
+    packages=['ldappy'],
     install_requires=[
         "pyldap==2.4.25.1",
     ],
