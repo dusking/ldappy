@@ -4,7 +4,7 @@ ldappy
 [![Build Status](https://travis-ci.org/dusking/ldappy.svg?branch=master)](https://travis-ci.org/dusking/ldappy)
 [![PypI](http://img.shields.io/pypi/v/ldappy.svg)](http://img.shields.io/pypi/v/ldappy.svg)
 
-Why are there two p's in `ldappy` and not only one? you may ask.. well.. it's because it's the Happy way to use ldap with python :) `ldappy` gives api to query LDAP server, without the need to know about LDAP. Supporting both Active directory and open LDAP servers.
+Why are there two p's in `ldappy` and not only one? you may ask.. well.. it's because it's the Happy way to use ldap with python :) `ldappy` gives api to query LDAP server, without the need to know about LDAP. Supporting both Active Directory and Open LDAP servers.
 
 
 ldappy uses [pyldap](https://github.com/pyldap/pyldap) for the communication with the LDAP server. 
@@ -15,11 +15,18 @@ ldappy uses [pyldap](https://github.com/pyldap/pyldap) for the communication wit
 pip install ldappy
 ```
 
-## dev requirements
+Or from source:
 
 ```shell
-sudo apt-get install gcc, python-dev
-sudo apt-get install python3-dev, libpython3-dev, libpython3.4-dev, libpython3.5-dev
+git clone git@github.com:dusking/ldappy.git
+cd ldappy
+make install
+```
+
+### You may need to install the following packages
+
+```shell
+sudo apt-get install python-dev, python3-dev, libpython3-dev, libpython3.4-dev, libpython3.5-dev
 python3.4 -m pip install pyldap
 python3.5 -m pip install pyldap
 ```
@@ -41,7 +48,8 @@ There is User object and Group object. Each of them inherit from dict, so all th
 ## Testing
 
 NOTE: Running the tests require an internet connection
-NOTE: You may install some dependencies. 
+
+NOTE: You may need to install some dependencies, as described above.. 
 
 ```shell
 git clone git@github.com:dusking/ldappy.git
