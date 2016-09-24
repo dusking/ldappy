@@ -1,6 +1,9 @@
 import re
 import ldap
 import logging
+
+from IPy import IP
+
 from .dotexdict import dotexdict
 
 logger = logging.getLogger(__name__)
@@ -17,6 +20,7 @@ class Config(dotexdict):
             'windows_login_name': 'sam_account_name'
         })
         self._validate()
+        self._set_domain_component()
 
     def _validate(self):
         required_attributes = ['username', 'password', 'ldap_server']
@@ -45,8 +49,31 @@ class Config(dotexdict):
         :return:
         """
         if 'domain_component' not in self:
+            if not self._auto_create_domain_component():
+                raise Exception('Missing domain_component in configuration')
+
+    def _auto_create_domain_component(self):
+        if 'domain' in self:
+            domain_components = self.domain.split('.')
+            self.domain_component = ','.join(['dc={0}'.format(dc) for dc in domain_components])
+            logger.info('adding domain component: {0}, based on domain'
+                        .format(self.domain_component))
+            return True
+        elif self._server_given_as_dns(self.ldap_server):
             ldap_server_without_port = re.sub(r':\d+/', '', self.ldap_server)
             components_list = ldap_server_without_port.split('.')
             dc_list = ['dc={0}'.format(dc) for dc in components_list[1:]]
             self.domain_component = ','.join(dc_list)
-            logger.info('adding domain component: {0}'.format(self.domain_component))
+            logger.info('adding domain component: {0}, based on server'
+                        .format(self.domain_component))
+            return True
+        return False
+
+    @staticmethod
+    def _server_given_as_dns(server_addr):
+        try:
+            only_ip = server_addr.replace('ldap://', '').strip('/')
+            IP(only_ip)
+            return False
+        except:
+            return True

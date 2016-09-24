@@ -9,16 +9,14 @@ def pytest_addoption(parser):
 
 def pytest_generate_tests(metafunc):
     configs = {'ad_config': {'config': {'ldap_server': 'ldap://52.57.5.220:389/',
-                                        'organization_id': '',
                                         'active_directory': True,
                                         'domain': 'cloudify.com',
-                                        'domain_component': 'dc=cloudify,dc=com',
                                         'username': 'omer',
                                         'password': '!QAZ2wsx'},
                              'user': 'omer',
                              'group': 'group_1'},
                'jumpcloud_config': {'config': {'ldap_server': 'ldap://ldap.jumpcloud.com/',
-                                               'domain_component': 'dc=jumpcloud,dc=com',
+                                               'domain': 'jumpcloud.com',
                                                'organization_id': '57bd7a8df6978662316e998e',
                                                'username': 'domer',
                                                'password': '!QAZ2wsx'},
