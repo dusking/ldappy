@@ -23,6 +23,7 @@ setup(
     packages=['ldappy'],
     install_requires=[
         "pyldap==2.4.25.1",
+        "IPy==0.83"
     ],
     classifiers=[
         'Programming Language :: Python',
