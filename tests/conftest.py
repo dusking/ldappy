@@ -8,7 +8,7 @@ def pytest_addoption(parser):
 
 
 def pytest_generate_tests(metafunc):
-    configs = {'ad_config': {'config': {'ldap_server': 'ldap://52.57.5.220:389/',
+    configs = {'ad_config': {'config': {'ldap_server': 'ldap://52.57.52.159:389/',
                                         'active_directory': True,
                                         'domain': 'cloudify.com',
                                         'username': 'omer',

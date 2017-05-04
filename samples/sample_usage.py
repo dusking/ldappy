@@ -27,6 +27,11 @@ jumpcloud_config = {'ldap_server': 'ldap://ldap.jumpcloud.com/',
                     'username': 'domer',
                     'password': '!QAZ2wsx'}
 
+config = {'ldap_server': 'ldap://52.57.52.159:389/',
+          'active_directory': True,
+          'domain': 'cloudify.com',
+          'username': 'omer1',
+          'password': '!QAZ2wsx'}
 
 def set_logger():
     handler = logging.StreamHandler()
