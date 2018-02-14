@@ -67,6 +67,7 @@ class Users(LdapQuery):
             uid, self._ldap_config.domain_component
         )
         groups = self.search(base_dn, LdapScope.SUBTREE, ldap_filter, 'cn')
+        groups = groups or []
         return [group[0] for group in groups]
 
     @handle_ldap_connection
