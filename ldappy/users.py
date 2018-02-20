@@ -28,7 +28,7 @@ class Users(LdapQuery):
             if type(user_info) is not dict:
                 continue
             user_info.update({'user_dn': [user_distinguished_name]})
-            users.append(User(user_info))
+            users.append(self._get_user_with_groups(user_info))
         return users
 
     def get(self, name=None, dn=None, attribute=None):
@@ -52,7 +52,23 @@ class Users(LdapQuery):
             logger.warning('Failed to find info for user: {0}'.format(name if name else dn))
             return None
         user_distinguished_name, user_info = result[0]
-        return User(user_info)
+        return self._get_user_with_groups(user_info)
+    
+    def _get_user_with_groups(self, user_info):
+        user = User(user_info)
+        if 'memberOf' not in user or not user.memberOf:
+            user.memberOf = self._get_groups(user.uid[0])
+        return user
+
+    @handle_ldap_connection
+    def _get_groups(self, uid):
+        base_dn = 'ou=groups,{0}'.format(self._ldap_config.domain_component)
+        ldap_filter = '(uniqueMember=uid={0},ou=users,{1})'.format(
+            uid, self._ldap_config.domain_component
+        )
+        groups = self.search(base_dn, LdapScope.SUBTREE, ldap_filter, 'cn')
+        groups = groups or []
+        return [group[0] for group in groups]
 
     @handle_ldap_connection
     def _get_by_name(self, name, attribute=None):
