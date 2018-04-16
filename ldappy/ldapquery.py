@@ -5,6 +5,14 @@ from .safeldap import safe_ldap
 logger = logging.getLogger(__name__)
 LDAP_SUCCESS_CODE = 97
 
+# ldap constants
+SCOPE_BASE = 0
+SCOPE_ONELEVEL = 1
+SCOPE_SUBTREE = 2
+OPT_X_TLS_REQUIRE_CERT = 24582
+OPT_X_TLS_NEVER = 0
+RES_SEARCH_ENTRY = 100
+
 
 def byte_to_str(obj):
     if type(obj) is not list:
@@ -27,9 +35,9 @@ def byte_to_str(obj):
 
 
 class LdapScope(object):
-    BASE = ldap.SCOPE_BASE
-    ONE = ldap.SCOPE_ONELEVEL
-    SUBTREE = ldap.SCOPE_SUBTREE
+    BASE = SCOPE_BASE
+    ONE = SCOPE_ONELEVEL
+    SUBTREE = SCOPE_SUBTREE
 
 
 class LdapQuery(object):
@@ -71,7 +79,7 @@ class LdapQuery(object):
             if self._ldap_config.organization_id \
             else ''
         self._base_dn = '{0}{1}'.format(organization_id, self._ldap_config.domain_component)
-        ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
+        ldap.set_option(OPT_X_TLS_REQUIRE_CERT, OPT_X_TLS_NEVER)
 
         self.search = self.search_sync
 
@@ -107,7 +115,7 @@ class LdapQuery(object):
             if not result_data:
                 break
             else:
-                if result_type == ldap.RES_SEARCH_ENTRY:
+                if result_type == RES_SEARCH_ENTRY:
                     result_set.append(result_data)
         byte_to_str(result_set)
         return result_set
